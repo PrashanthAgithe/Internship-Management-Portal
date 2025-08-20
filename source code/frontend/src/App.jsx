@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button"
-import { Signin } from "./components/Signin"
+import { Signin } from "./pages/Signin"
 import { Route, Routes } from "react-router-dom"
-import {Signup} from "./components/Signup"
+import {Signup} from "./pages/Signup"
 
 function App() {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
+    <div>
       <Routes>
         <Route path="/signup" element={<Signup />}/>
         <Route path="/signin" element={<Signin />}/>

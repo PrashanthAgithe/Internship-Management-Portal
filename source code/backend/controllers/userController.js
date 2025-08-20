@@ -1,10 +1,13 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = process.env.JWT_SECRET || "yourSecretKey"; // keep in .env
 
 // Signup function
 const signup = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, role } = req.body;
 
         // Check if user already exists
         const existingUser = await User.findOne({ email });
@@ -16,10 +19,25 @@ const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Create a new user
-        const newUser = new User({ name, email, password: hashedPassword });
+        const newUser = new User({ name, email, password: hashedPassword, role });
         await newUser.save();
 
-        res.status(201).json({ message: 'User registered successfully', user: newUser });
+        // Create JWT token
+        const token = jwt.sign(
+            { id: newUser._id, role: newUser.role },
+            JWT_SECRET,
+            { expiresIn: "1h" }
+        );
+
+        // Exclude password from response
+        const userData = newUser.toObject();
+        delete userData.password;
+
+        res.status(201).json({ 
+            message: 'User registered successfully', 
+            user: userData, 
+            token 
+        });
     } catch (error) {
         res.status(500).json({ message: 'Error registering user', error: error.message });
     }
@@ -42,10 +60,40 @@ const signin = async (req, res) => {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
-        res.status(200).json({ message: 'User signed in successfully', user });
+        // Create JWT token
+        const token = jwt.sign(
+            { id: user._id, role: user.role },
+            JWT_SECRET,
+            { expiresIn: "1h" }
+        );
+
+        // Exclude password from response
+        const userData = user.toObject();
+        delete userData.password;
+
+        res.status(200).json({ 
+            message: 'User signed in successfully', 
+            user: userData, 
+            token 
+        });
     } catch (error) {
         res.status(500).json({ message: 'Error signing in', error: error.message });
     }
 };
 
-module.exports = { signup, signin };
+const getUser = async (req, res) => {
+    try {
+        const userId = req.user.id; // added from JWT middleware
+
+        const user = await User.findById(userId).select("-password");
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ user });
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching user", error: error.message });
+    }
+};
+
+module.exports = { signup, signin, getUser };
