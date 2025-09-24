@@ -8,7 +8,7 @@ const app = express();
 //Importing user routes
 const userRoutes = require('./routes/userRoute');
 
-// Enable CORS for all routes
+// Enable CORS 
 app.use(cors());
 
 // Middleware to parse JSON requests
