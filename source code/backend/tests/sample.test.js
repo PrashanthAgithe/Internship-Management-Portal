@@ -12,7 +12,6 @@ describe("User Login Test", () => {
         password: "prashanth"
       });
 
-
     expect([200, 401]).toContain(res.statusCode);
     
     if (res.statusCode === 200) {
@@ -25,5 +24,6 @@ describe("User Login Test", () => {
 
   afterAll(async () => {
     await mongoose.connection.close();
+    await new Promise(resolve => setTimeout(resolve, 500)); // graceful shutdown
   });
 });
