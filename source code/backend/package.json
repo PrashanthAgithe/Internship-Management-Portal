@@ -4,8 +4,13 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+<<<<<<< HEAD
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js"
+=======
+    "test": "jest",
+    "start": "node server.js"
+>>>>>>> 6a821ff75cdbfca50ef0ec4ed6a665c2d7a2ccc4
   },
   "keywords": [],
   "author": "",
@@ -18,5 +23,9 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.17.1"
+  },
+  "devDependencies": {
+    "jest": "^30.2.0",
+    "supertest": "^7.1.4"
   }
 }
