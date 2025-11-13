@@ -14,7 +14,9 @@ spec:
     spec:
       containers:
       - name: backend
-        image: prashanthagithe/mybackend:1.0
+        image: prashanthagithe/mybackend:latest
         ports:
         - containerPort: 5000
-        - nodePort: 30001
+        envFrom:
+        - secretRef:
+            name: backend-secrets
