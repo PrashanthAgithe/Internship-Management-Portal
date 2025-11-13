@@ -4,7 +4,5 @@ services:
     build: .
     ports:
       - "5000:5000"
-    environment:
-      - DB_URL=mongodb+srv://prashanthagithe:imp@cluster0.as9vh3h.mongodb.net/impDB
-      - JWT_SECRET=impSecretKey
-      # Add other environment variables from your .env file
+    env_file:
+      - .env

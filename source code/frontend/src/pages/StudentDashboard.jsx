@@ -6,14 +6,15 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useState } from "react"
 import { Power, User } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import { useUserStore } from "@/store/userStore"
 
 const StudentDashboard = () => {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
-
+  const {user}=useUserStore();
   const handleLogout = () => {
     localStorage.removeItem("token");      // delete JWT
-    localStorage.removeItem("user");       // optional if you store user
+    // localStorage.removeItem("user");       // optional if you store user
      window.location.href = "/signin";                  // redirect to login
   };
 
@@ -43,9 +44,9 @@ const StudentDashboard = () => {
                 </DialogHeader>
 
                 <div className="space-y-3 text-sm">
-                  <p><strong>Name:</strong> Sai Varshith</p>
-                  <p><strong>Roll No:</strong> 22071A0592</p>
-                  <p><strong>Branch:</strong> CSE</p>
+                  <p><strong>Name:</strong> {user.name}</p>
+                  <p><strong>Email:</strong> {user.email}</p>
+                  <p><strong>Role:</strong> {user.role}</p>
                 </div>
               </DialogContent>
             </Dialog>

@@ -6,14 +6,16 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useUserStore } from "@/store/userStore";
 
 export default function TeacherDashboard() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
+  const {user}=useUserStore();
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    // localStorage.removeItem("user");
      window.location.href = "/signin";
   };
 
@@ -45,10 +47,10 @@ export default function TeacherDashboard() {
               </DialogHeader>
 
               <div className="space-y-3 text-sm">
-                <p><strong>Name:</strong> Faculty User</p>
-                <p><strong>Email:</strong> faculty@example.com</p>
-                <p><strong>Role:</strong> Teacher</p>
-                <p><strong>Status:</strong> <Badge>Active</Badge></p>
+                <p><strong>Name:</strong> {user.name}</p>
+                <p><strong>Email:</strong> {user.email}</p>
+                <p><strong>Role:</strong> {user.role}</p>
+                {/* <p><strong>Status:</strong> <Badge>Active</Badge></p> */}
               </div>
             </DialogContent>
           </Dialog>
