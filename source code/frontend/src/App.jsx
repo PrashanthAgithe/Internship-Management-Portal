@@ -10,6 +10,7 @@ import { useUserStore } from "./store/userStore";
 function App() {
   const { checkAuth, isAuthenticated, user } = useUserStore();
 
+
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);

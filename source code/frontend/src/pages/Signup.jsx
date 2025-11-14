@@ -99,7 +99,7 @@ export const Signup = () => {
                 </div>
                 <div className="flex items-center space-x-2 ml-4">
                   <RadioGroupItem value="teacher" id="role-teacher" />
-                  <Label htmlFor="role-teacher">Teacher</Label>
+                  <Label htmlFor="role-teacher">Professor</Label>
                 </div>
               </RadioGroup>
             </div>

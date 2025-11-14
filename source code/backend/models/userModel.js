@@ -14,10 +14,29 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    role:{
-        type:String,
+    role: {
+        type: String,
         required: true,
+    },
+
+    documents: {
+        offerLetter: {
+            url: { type: String, default: "" },
+            status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending" },
+            comment: { type: String, default: "" }
+        },
+        noc: {
+            url: { type: String, default: "" },
+            status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending" },
+            comment: { type: String, default: "" }
+        },
+        certificate: {
+            url: { type: String, default: "" },
+            status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending" },
+            comment: { type: String, default: "" }
+        }
     }
+
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
